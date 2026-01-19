@@ -1,9 +1,14 @@
 {
   pkgs,
   inputs,
+  lib,
   ...
 }:
 {
+  imports = [
+    ./ssh-agent-wsl
+  ];
+
   wsl.enable = true;
   wsl.defaultUser = "songpola";
 
@@ -21,7 +26,14 @@
     direnv
     nix-output-monitor
     isd
+    ov
   ];
+
+  environment.sessionVariables = {
+    PAGER = "ov";
+    # Let systemd use this pager
+    SYSTEMD_PAGERSECURE = "false";
+  };
 
   programs.nix-ld.enable = true;
 
@@ -31,17 +43,21 @@
     "pipe-operators"
   ];
 
-  nix.registry.self.flake = inputs.self;
-  nix.registry.unstable.to = {
-    type = "github";
-    owner = "NixOS";
-    repo = "nixpkgs";
-    ref = "nixos-unstable";
+  nix.registry = {
+    self.flake = inputs.self;
+    unstable.to = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixos-unstable";
+    };
   };
 
   # See Notes in README.md
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
 
   home-manager.users.songpola = {
     programs.jujutsu = {
@@ -65,10 +81,25 @@
       };
     };
 
+    programs.bash = {
+      enable = true;
+      initExtra = lib.mkOrder 3000 ''
+        # Use nushell in place of bash unless FORCEBASH is set
+        if [[ -z "$FORCEBASH" ]] && command -v nu >/dev/null 2>&1; then
+          exec nu
+        fi
+      '';
+    };
+
     programs.starship.enable = true;
     programs.zoxide.enable = true;
     programs.carapace.enable = true;
-    programs.atuin.enable = true;
+    programs.bat.enable = true;
+
+    programs.atuin = {
+      enable = true;
+      flags = [ "--disable-up-arrow" ];
+    };
 
     programs.eza = {
       enable = true;
@@ -82,6 +113,26 @@
     programs.direnv = {
       enable = true;
       nix-direnv.enable = true;
+    };
+
+    programs.ssh = {
+      enable = true;
+
+      enableDefaultConfig = false;
+      matchBlocks."*" = {
+        # Enable SSH connection multiplexing
+        controlMaster = "auto";
+        controlPersist = "10m";
+        # Defaults from old `enableDefaultConfig` option
+        forwardAgent = false;
+        addKeysToAgent = "no";
+        compression = false;
+        serverAliveInterval = 0;
+        serverAliveCountMax = 3;
+        hashKnownHosts = false;
+        userKnownHostsFile = "~/.ssh/known_hosts";
+        controlPath = "~/.ssh/master-%r@%n:%p";
+      };
     };
 
     home.stateVersion = "25.11";
