@@ -5,7 +5,7 @@
     nixos-wsl.url = "github:nix-community/NixOS-WSL/release-25.11";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -15,7 +15,7 @@
       nixos-wsl,
       home-manager,
       ...
-    }:
+    }@inputs:
     {
       nixosConfigurations = {
         dijiang = nixpkgs.lib.nixosSystem {
@@ -25,6 +25,7 @@
             home-manager.nixosModules.home-manager
             ./hosts/dijiang/configuration.nix
           ];
+          specialArgs = { inherit inputs; };
         };
       };
     };
