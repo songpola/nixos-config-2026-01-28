@@ -16,17 +16,31 @@
       home-manager,
       ...
     }@inputs:
-    {
-      nixosConfigurations = {
-        spla-desktop-wsl = nixpkgs.lib.nixosSystem {
+    let
+      inherit (nixpkgs) lib;
+      commonModules = [
+        nixos-wsl.nixosModules.default
+        home-manager.nixosModules.home-manager
+        ./common
+      ];
+      mkSystem =
+        extraModules:
+        nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [
-            nixos-wsl.nixosModules.default
-            home-manager.nixosModules.home-manager
-            ./hosts/spla-desktop-wsl/configuration.nix
-          ];
+          modules = commonModules ++ extraModules;
           specialArgs = { inherit inputs; };
         };
-      };
+      mkConfigs =
+        names:
+        let
+          systems = map (name: mkSystem [ ./hosts/${name} ]) names;
+        in
+        builtins.listToAttrs (lib.zipListsWith lib.nameValuePair names systems);
+    in
+    {
+      nixosConfigurations = mkConfigs [
+        "spla-desktop-wsl"
+        "spla-laptop-wsl"
+      ];
     };
 }

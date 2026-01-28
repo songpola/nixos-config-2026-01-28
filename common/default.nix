@@ -12,9 +12,12 @@
   wsl.enable = true;
   wsl.defaultUser = "songpola";
 
-  system.stateVersion = "25.11";
+  # Default to private group instead of shared "users" group
+  users.groups."songpola".gid = 1000;
+  users.users."songpola".group = "songpola";
+  users.users."songpola".extraGroups = [ "users" ];
 
-  networking.hostName = "spla-desktop-wsl";
+  system.stateVersion = "25.11";
 
   environment.systemPackages = with pkgs; [
     micro
@@ -59,7 +62,7 @@
     useUserPackages = true;
   };
 
-  home-manager.users.songpola = {
+  home-manager.users."songpola" = {
     programs.jujutsu = {
       enable = true;
       settings = {
@@ -67,7 +70,6 @@
           email = "ice.songpola@pm.me";
           name = "Songpol Anannetikul";
         };
-
         # Use Git's "diff3" style conflict markers
         ui.conflict-marker-style = "git";
       };

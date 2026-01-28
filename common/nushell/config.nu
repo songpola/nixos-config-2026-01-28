@@ -32,7 +32,7 @@ def shell [
 alias c = clear
 alias l = ls
 
-alias eza = eza --group --group-directories-first
+alias eza = eza --group --group-directories-first --time-style=relative
 alias ls = eza
 alias la = eza -aa
 alias ll = eza -l
