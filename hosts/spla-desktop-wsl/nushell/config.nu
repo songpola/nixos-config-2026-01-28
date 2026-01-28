@@ -46,8 +46,8 @@ alias bt = nh os boot
 
 alias bm = batman
 
+alias gs = git status
 alias ga = git add .
-alias gp = git push
 
 alias gcm = bunx -b czg emoji gpg
 

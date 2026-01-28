@@ -18,12 +18,12 @@
     }@inputs:
     {
       nixosConfigurations = {
-        dijiang = nixpkgs.lib.nixosSystem {
+        spla-desktop-wsl = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             nixos-wsl.nixosModules.default
             home-manager.nixosModules.home-manager
-            ./hosts/dijiang/configuration.nix
+            ./hosts/spla-desktop-wsl/configuration.nix
           ];
           specialArgs = { inherit inputs; };
         };

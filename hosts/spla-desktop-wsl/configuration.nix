@@ -14,7 +14,7 @@
 
   system.stateVersion = "25.11";
 
-  networking.hostName = "dijiang";
+  networking.hostName = "spla-desktop-wsl";
 
   environment.systemPackages = with pkgs; [
     micro
