@@ -32,6 +32,14 @@ def shell [
 alias c = clear
 alias l = ls
 
+alias eza = eza --group --group-directories-first
+alias ls = eza
+alias la = eza -aa
+alias ll = eza -l
+alias lla = eza -laa
+alias llt = ll --tree
+alias llta = llt -a # Option --tree is useless given --all --all
+
 alias sw = nh os switch
 alias swn = nh os switch -n
 alias bt = nh os boot
@@ -46,6 +54,8 @@ alias gcm = bunx -b czg emoji gpg
 alias j = just
 
 alias jl = jj log
+alias jlr = jj log -r
+alias jla = jj log -r ::
 alias je = jj edit
 alias jc = jj commit
 alias jd = jj desc
@@ -59,14 +69,26 @@ alias jn = jj new
 alias jnm = jj new main
 alias jb = jj bookmark
 alias jm = jj bookmark move
-alias jmm = jj bookmark move main -t @- # move main to last commit
+alias jmm = jj bookmark move main -t @- # move main bookmark to last revision
+alias jab = jj abandon
+alias jun = jj undo
+alias jfa = jj file annotate
+alias jfu = jj file untrack
+alias ji = jj git init
 alias jf = jj git fetch
 alias jp = jj git push
+alias jrl = jj git remote list
+alias jra = jj git remote add
+alias jrs = jj git remote set-url
+alias jgc = jj git clone
 
 alias p = podman
 
-# HTTPie
-alias h = ^http
-alias hs = ^https
+alias h = ^http # HTTPie http
+alias hs = ^https # HTTPie https
 
 alias ze = zellij
+
+alias da = direnv allow
+
+alias skr = ssh-keygen -R

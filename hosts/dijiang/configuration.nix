@@ -76,9 +76,6 @@
     programs.nushell = {
       enable = true;
       configFile.source = ./nushell/config.nu;
-      shellAliases = {
-        llt = "eza -l --tree";
-      };
     };
 
     programs.bash = {
@@ -95,19 +92,11 @@
     programs.zoxide.enable = true;
     programs.carapace.enable = true;
     programs.bat.enable = true;
+    programs.eza.enable = true;
 
     programs.atuin = {
       enable = true;
       flags = [ "--disable-up-arrow" ];
-    };
-
-    programs.eza = {
-      enable = true;
-      extraOptions = [
-        "-g" # list each file's group
-        "--group-directories-first"
-      ];
-      enableNushellIntegration = true;
     };
 
     programs.direnv = {
