@@ -17,8 +17,6 @@
   users.users."songpola".group = "songpola";
   users.users."songpola".extraGroups = [ "users" ];
 
-  system.stateVersion = "25.11";
-
   environment.systemPackages = with pkgs; [
     micro
     nh
