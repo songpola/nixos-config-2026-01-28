@@ -1,0 +1,4 @@
+{
+  time.timeZone = "Asia/Bangkok";
+  environment.variables.TZ = "Asia/Bangkok";
+}

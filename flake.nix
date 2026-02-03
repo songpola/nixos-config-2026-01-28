@@ -13,6 +13,9 @@
     denix.inputs.home-manager.follows = "home-manager";
 
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -25,31 +28,8 @@
     }@inputs:
     let
       delib = denix.lib;
-      # inherit (nixpkgs) lib;
-      # commonModules = [
-      #   nixos-wsl.nixosModules.default
-      #   home-manager.nixosModules.home-manager
-      #   ./common
-      # ];
-      # mkSystem =
-      #   extraModules:
-      #   nixpkgs.lib.nixosSystem {
-      #     system = "x86_64-linux";
-      #     modules = commonModules ++ extraModules;
-      #     specialArgs = { inherit inputs; };
-      #   };
-      # mkConfigs =
-      #   names:
-      #   let
-      #     systems = map (name: mkSystem [ ./hosts/${name} ]) names;
-      #   in
-      #   builtins.listToAttrs (lib.zipListsWith lib.nameValuePair names systems);
     in
     {
-      # nixosConfigurations = mkConfigs [
-      #   "spla-desktop-wsl"
-      #   "spla-laptop-wsl"
-      # ];
       nixosConfigurations = delib.configurations {
         moduleSystem = "nixos";
         homeManagerUser = "songpola";

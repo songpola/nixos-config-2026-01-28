@@ -7,15 +7,12 @@ delib.module {
 
   options =
     with delib;
-    moduleOptions (
-      { parent, ... }:
-      {
-        enable = boolOption false;
+    moduleOptions {
+      enable = boolOption false;
 
-        # The users need to set this option depending on their GPU model
-        useOpenSourceKernelModule = noDefault (boolOption null);
-      }
-    );
+      # The users need to set this option depending on their GPU model
+      useOpenSourceKernelModule = noDefault (boolOption null);
+    };
 
   nixos.ifEnabled =
     { cfg, ... }:

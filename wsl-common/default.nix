@@ -1,6 +1,5 @@
 {
   pkgs,
-  inputs,
   lib,
   ...
 }:
@@ -9,13 +8,7 @@
     ./ssh-agent-wsl
   ];
 
-  wsl.enable = true;
-  wsl.defaultUser = "songpola";
-
-  # Default to private group instead of shared "users" group
-  users.groups."songpola".gid = 1000;
-  users.users."songpola".group = "songpola";
-  users.users."songpola".extraGroups = [ "users" ];
+  myconfig.wheelNoPassword.enable = true;
 
   environment.systemPackages = with pkgs; [
     micro
@@ -37,28 +30,6 @@
   };
 
   programs.nix-ld.enable = true;
-
-  nix.settings.experimental-features = [
-    "flakes"
-    "nix-command"
-    "pipe-operators"
-  ];
-
-  nix.registry = {
-    self.flake = inputs.self;
-    unstable.to = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-unstable";
-    };
-  };
-
-  # See Notes in README.md
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-  };
 
   home-manager.users."songpola" = {
     programs.jujutsu = {
@@ -123,7 +94,5 @@
         controlPath = "~/.ssh/master-%r@%n:%p";
       };
     };
-
-    home.stateVersion = "25.11";
   };
 }
