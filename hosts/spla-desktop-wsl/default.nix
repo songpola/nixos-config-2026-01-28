@@ -6,14 +6,7 @@ delib.host {
   nixos.system.stateVersion = "25.11";
   home.home.stateVersion = "25.11";
 
-  nixos.wsl.enable = true;
+  myconfig.types.wsl.enable = true;
 
-  nixos.imports = [ ../../wsl-common ];
-
-  myconfig.wheelNoPassword.enable = true;
-
-  myconfig.programs = {
-    ssh.enable = true;
-    ov.enable = true;
-  };
+  myconfig.defaults.enable = true;
 }

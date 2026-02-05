@@ -18,7 +18,7 @@ delib.host {
   myconfig.bootloader.grubEfi.enable = true;
 
   # Use systemd-networkd bridge
-  myconfig.systemdNetworkdBridge = {
+  myconfig.settings.systemdNetworkdBridge = {
     enable = true;
     bridgeMacAddress = "b4:2e:99:91:b1:10"; # eno1
   };
@@ -30,7 +30,7 @@ delib.host {
   };
 
   # Network optimizations
-  myconfig.netdevFeatures = {
+  myconfig.settings.netdevFeatures = {
     enable = true;
     interfaceFeatures."eno1" = {
       # For Tailscale
@@ -47,13 +47,10 @@ delib.host {
   };
 
   # Auto-login on Linux console (getty)
-  myconfig.consoleAutoLogin.enable = true;
+  myconfig.settings.consoleAutoLogin.enable = true;
 
   # Allow "wheel" group members to use `sudo` without password
-  myconfig.wheelNoPassword.enable = true;
+  myconfig.settings.wheelNoPassword.enable = true;
 
-  myconfig.programs = {
-    ssh.enable = true;
-    ov.enable = true;
-  };
+  myconfig.defaults.enable = true;
 }

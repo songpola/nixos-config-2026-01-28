@@ -4,14 +4,8 @@
   config,
   ...
 }:
-let
-  inherit (lib)
-    mkMerge
-    genAttrs'
-    ;
-in
 delib.module {
-  name = "systemdNetworkdBridge";
+  name = "settings.systemdNetworkdBridge";
 
   options =
     with delib;
@@ -27,7 +21,7 @@ delib.module {
 
   nixos.ifEnabled =
     { cfg, ... }:
-    mkMerge [
+    lib.mkMerge [
       {
         # Force disable DHCP option from nixos-facter-modules
         facter.detected.dhcp.enable = lib.mkForce false;
@@ -70,7 +64,7 @@ delib.module {
       }
       {
         # Configure member interfaces of the bridge
-        systemd.network.networks = genAttrs' cfg.memberInterfaces (name: {
+        systemd.network.networks = lib.genAttrs' cfg.memberInterfaces (name: {
           name = "30-${cfg.bridgeName}-${name}";
           value = {
             matchConfig.Name = name;

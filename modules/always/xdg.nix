@@ -1,6 +1,6 @@
 { delib, ... }:
 delib.module {
-  name = "xdg";
+  name = "always.xdg";
 
   home.always = {
     # This will also add XDG_* environment variables

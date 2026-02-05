@@ -9,7 +9,7 @@
 # https://github.com/systemd/systemd/issues/39318
 # Then migrate to systemd-networkd native support for this feature.
 delib.module {
-  name = "netdevFeatures";
+  name = "settings.netdevFeatures";
 
   options =
     with delib;
