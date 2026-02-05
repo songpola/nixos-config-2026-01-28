@@ -8,8 +8,6 @@
     ./ssh-agent-wsl
   ];
 
-  myconfig.wheelNoPassword.enable = true;
-
   environment.systemPackages = with pkgs; [
     micro
     nh
@@ -20,14 +18,7 @@
     direnv
     nix-output-monitor
     isd
-    ov
   ];
-
-  environment.sessionVariables = {
-    PAGER = "ov";
-    # Let systemd use this pager
-    SYSTEMD_PAGERSECURE = "false";
-  };
 
   programs.nix-ld.enable = true;
 
@@ -73,26 +64,6 @@
     programs.direnv = {
       enable = true;
       nix-direnv.enable = true;
-    };
-
-    programs.ssh = {
-      enable = true;
-
-      enableDefaultConfig = false;
-      matchBlocks."*" = {
-        # Enable SSH connection multiplexing
-        controlMaster = "auto";
-        controlPersist = "10m";
-        # Defaults from old `enableDefaultConfig` option
-        forwardAgent = false;
-        addKeysToAgent = "no";
-        compression = false;
-        serverAliveInterval = 0;
-        serverAliveCountMax = 3;
-        hashKnownHosts = false;
-        userKnownHostsFile = "~/.ssh/known_hosts";
-        controlPath = "~/.ssh/master-%r@%n:%p";
-      };
     };
   };
 }

@@ -9,4 +9,11 @@ delib.host {
   nixos.wsl.enable = true;
 
   nixos.imports = [ ../../wsl-common ];
+
+  myconfig.wheelNoPassword.enable = true;
+
+  myconfig.programs = {
+    ssh.enable = true;
+    ov.enable = true;
+  };
 }

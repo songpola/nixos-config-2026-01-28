@@ -51,4 +51,9 @@ delib.host {
 
   # Allow "wheel" group members to use `sudo` without password
   myconfig.wheelNoPassword.enable = true;
+
+  myconfig.programs = {
+    ssh.enable = true;
+    ov.enable = true;
+  };
 }
