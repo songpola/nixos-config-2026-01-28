@@ -45,8 +45,11 @@
             args.enable = true;
             rices.enable = false;
             hosts = {
-              type.types = [ ];
-              features.features = [ ];
+              type.types = [
+                "wsl"
+                "server"
+              ];
+              features.features = [ "nvidia" ];
             };
           })
         ];

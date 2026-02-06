@@ -1,14 +1,14 @@
 { delib, pkgs, ... }:
 delib.module {
-  name = "programs.fzf";
+  name = "programs.zellij";
 
   options = delib.singleEnableOption false;
 
   nixos.ifEnabled = {
-    environment.systemPackages = [ pkgs.fzf ];
+    environment.systemPackages = [ pkgs.zellij ];
   };
 
   home.ifEnabled = {
-    programs.fzf.enable = true;
+    programs.zellij.enable = true;
   };
 }

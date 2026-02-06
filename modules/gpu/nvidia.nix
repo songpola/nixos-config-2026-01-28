@@ -1,5 +1,6 @@
 {
   delib,
+  host,
   ...
 }:
 delib.module {
@@ -8,7 +9,7 @@ delib.module {
   options =
     with delib;
     moduleOptions {
-      enable = boolOption false;
+      enable = boolOption host.nvidiaFeatured;
 
       # The users need to set this option depending on their GPU model
       useOpenSourceKernelModule = noDefault (boolOption null);

@@ -2,7 +2,7 @@
 delib.module {
   name = "programs.eza";
 
-  options = delib.singleEnableOption true;
+  options = delib.singleEnableOption false;
 
   home.ifEnabled = {
     programs.eza = {

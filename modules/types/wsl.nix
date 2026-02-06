@@ -3,12 +3,13 @@
   inputs,
   pkgs,
   homeManagerUser,
+  host,
   ...
 }:
 delib.module {
   name = "types.wsl";
 
-  options = delib.singleEnableOption false;
+  options = delib.singleEnableOption host.isWsl;
 
   nixos.always.imports = [ inputs.nixos-wsl.nixosModules.default ];
 

@@ -2,6 +2,8 @@
 delib.host {
   name = "prts";
   system = "x86_64-linux";
+  type = "server";
+  features = [ "nvidia" ];
 
   nixos.system.stateVersion = "24.11";
   home.home.stateVersion = "24.11";
@@ -23,11 +25,8 @@ delib.host {
     bridgeMacAddress = "b4:2e:99:91:b1:10"; # eno1
   };
 
-  # NVIDIA GPU
-  myconfig.gpu.nvidia = {
-    enable = true;
-    useOpenSourceKernelModule = false;
-  };
+  # GTX 1050 Ti does not support open-source kernel module
+  myconfig.gpu.nvidia.useOpenSourceKernelModule = false;
 
   # Network optimizations
   myconfig.settings.netdevFeatures = {
@@ -45,12 +44,4 @@ delib.host {
       tcp-segmentation-offload = true;
     };
   };
-
-  # Auto-login on Linux console (getty)
-  myconfig.settings.consoleAutoLogin.enable = true;
-
-  # Allow "wheel" group members to use `sudo` without password
-  myconfig.settings.wheelNoPassword.enable = true;
-
-  myconfig.defaults.enable = true;
 }
