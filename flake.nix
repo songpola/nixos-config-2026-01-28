@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/release-25.11";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
@@ -19,18 +20,9 @@
   };
 
   outputs =
+    { denix, ... }@inputs:
     {
-      nixpkgs,
-      nixos-wsl,
-      home-manager,
-      denix,
-      ...
-    }@inputs:
-    let
-      delib = denix.lib;
-    in
-    {
-      nixosConfigurations = delib.configurations {
+      nixosConfigurations = denix.lib.configurations {
         moduleSystem = "nixos";
         homeManagerUser = "songpola";
 
@@ -39,7 +31,7 @@
           ./modules
         ];
 
-        extensions = with delib.extensions; [
+        extensions = with denix.lib.extensions; [
           args
           (base.withConfig {
             args.enable = true;
