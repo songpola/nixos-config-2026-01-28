@@ -17,6 +17,10 @@ delib.module {
     wsl.enable = true;
     wsl.defaultUser = homeManagerUser;
 
+    # Enable OpenGL driver from the Windows host
+    # See https://github.com/nix-community/NixOS-WSL/blob/main/modules/wsl-distro.nix
+    wsl.useWindowsDriver = true;
+
     # Enable xdg-open for opening files and URLs in WSL
     environment.systemPackages = [ pkgs.xdg-utils ];
   };
