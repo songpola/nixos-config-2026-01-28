@@ -62,6 +62,7 @@ delib.module {
 
     environment.systemPackages = with pkgs; [
       just
+      just-lsp
       lsof
       ripgrep
       sops
