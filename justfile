@@ -20,3 +20,6 @@ alias a := add
 
 add:
     git add .
+
+rm-channels-leftover:
+    sudo rm -r /root/.nix-defexpr/channels /nix/var/nix/profiles/per-user/root/channels

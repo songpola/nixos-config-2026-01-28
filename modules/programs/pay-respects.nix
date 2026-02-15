@@ -4,12 +4,7 @@ delib.module {
 
   options = delib.singleEnableOption false;
 
-  nixos.ifEnabled = {
-    programs.pay-respects.enable = true;
-    # TODO: Maybe add `programs.pay-respects.aiIntegration` in the future?
-    # NOTE: There's also `services.ollama` option for LLM backend.
-  };
-
+  # Enable on Home Manger option only, to avoid conflicts with NixOS module
   home.ifEnabled = {
     programs.pay-respects.enable = true;
   };
