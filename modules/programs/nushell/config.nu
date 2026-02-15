@@ -2,6 +2,8 @@ use std/util "path add"
 
 $env.config.show_banner = false
 
+$env.SHELL = ^which nu
+
 # If the terminal is VS Code terminal, use code as the default editor
 if ($env.TERM_PROGRAM? == "vscode") {
     $env.config.buffer_editor = ["code", "--wait"]
