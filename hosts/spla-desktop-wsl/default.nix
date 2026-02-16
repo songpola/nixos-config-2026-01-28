@@ -16,4 +16,8 @@ delib.host {
       mesa = pkgs.unstable.mesa;
     })
   ];
+
+  nixos.environment.systemPackages = with pkgs; [
+    github-copilot-cli
+  ];
 }

@@ -74,6 +74,7 @@ delib.module {
       ouch
       isd
       nix-output-monitor
+      jq
       # Nix
       nil
       nixfmt-rfc-style
