@@ -30,5 +30,9 @@
     };
   };
 
+  # NOTE: This works for `nix-shell`.
+  # But for `nix shell`, you still beed to use a workaround:
+  # `$ NIXPKGS_ALLOW_UNFREE=1 nix shell --impure ...`
+  # See https://github.com/NixOS/nixpkgs/issues/166220
   nixpkgs.config.allowUnfree = true;
 }

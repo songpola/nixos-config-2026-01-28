@@ -16,18 +16,23 @@ def shell [
     ...pkgs
     --flake (-f) = "nixpkgs"
     --dry (-n)
+    --unfree (-u)
 ] {
     let pkgs = ($pkgs | default -e [ "default" ]) | each { |pkg| $flake + "#" + $pkg }
+    let impure = if $unfree { [ "--impure" ] } else { [] }
     # If `nom` (nix-output-monitor) is available, use it instead of `nix shell`
-    let cmd = if (which nom | is-not-empty) {
-        [ nom shell ...$pkgs ]
-    } else {
-        [ nix shell ...$pkgs ]
-    }
+    let bin = if (which nom | is-not-empty) { "nom" } else { "nix" }
+    let cmd = [ $bin shell ...$impure ...$pkgs ]
     if $dry {
         print $cmd
     } else {
-        run-external $cmd
+        if $unfree {
+            with-env { NIXPKGS_ALLOW_UNFREE: "1" } {
+                run-external $cmd
+            }
+        } else {
+            run-external $cmd
+        }
     }
 }
 
