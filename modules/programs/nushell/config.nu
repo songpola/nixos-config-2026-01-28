@@ -40,11 +40,11 @@ alias c = clear
 
 alias eza = eza --group --group-directories-first --time-style=relative
 alias l = eza
-alias la = eza -aa
 alias ll = eza -l
-alias lla = eza -laa
-alias llt = ll --tree
-alias llta = llt -a # Option --tree is useless given --all --all
+alias la = eza -aa
+alias lla = eza -l -aa
+alias lt = eza --tree
+alias llt = eza -l --tree
 
 alias sw = nh os switch
 alias swn = nh os switch -n
@@ -74,8 +74,8 @@ alias jr = jj rebase
 alias jn = jj new
 alias jnm = jj new main
 alias jb = jj bookmark
-alias jm = jj bookmark move
-alias jmm = jj bookmark move main -t @- # move main bookmark to last revision
+alias jbs = jj bookmark set
+alias jsm = jj bookmark set main -r @- # set main bookmark to last revision
 alias jab = jj abandon
 alias jun = jj undo
 alias jfa = jj file annotate
