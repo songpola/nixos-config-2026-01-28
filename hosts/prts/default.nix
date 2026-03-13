@@ -44,4 +44,14 @@ delib.host {
       tcp-segmentation-offload = true;
     };
   };
+
+  # Enable Tailscale with subnet routing and exit node features
+  myconfig.services.tailscale.enable = true;
+  nixos.services.tailscale = {
+    useRoutingFeatures = "server";
+    extraSetFlags = [
+      "--advertise-routes=10.0.0.0/16"
+      "--advertise-exit-node"
+    ];
+  };
 }

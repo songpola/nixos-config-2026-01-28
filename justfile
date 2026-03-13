@@ -12,8 +12,14 @@ check *ARGS:
 switch *ARGS:
     nh os switch . {{ ARGS }}
 
+remote OP HOSTNAME TARGET *ARGS:
+    nh os {{ OP }} . --hostname={{ HOSTNAME }} --target-host={{ TARGET }} --elevation-strategy=passwordless {{ ARGS }}
+
 boot *ARGS:
     nh os boot . {{ ARGS }}
+
+build *ARGS:
+    nh os build . {{ ARGS }}
 
 add:
     git add .

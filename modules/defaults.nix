@@ -78,6 +78,7 @@ delib.module {
       # Nix
       nil
       nixfmt-rfc-style
+      dix
     ];
   };
 }
