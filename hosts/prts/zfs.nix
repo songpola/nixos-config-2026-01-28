@@ -34,4 +34,7 @@ delib.host {
       trim.enable = true;
     };
   };
+
+  # The `tank/docker` dataset is mounted on `/var/lib/docker`
+  myconfig.services.docker.zfsStorageDriver.enable = true;
 }

@@ -27,4 +27,6 @@ delib.host {
 
   # GTX 1050 Ti does not support open-source kernel module
   myconfig.gpu.nvidia.useOpenSourceKernelModule = false;
+
+  myconfig.services.docker.enable = true;
 }
