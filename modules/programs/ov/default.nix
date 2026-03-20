@@ -18,6 +18,7 @@ delib.module {
       enableDeltaIntegration = boolOption myconfig.programs.delta.enable;
       enableBatIntegration = boolOption myconfig.programs.bat.enable;
       enableBatmanIntegration = boolOption myconfig.programs.bat.batman.enable;
+      enableJujutsuIntegration = boolOption myconfig.programs.jujutsu.enable;
     };
 
   nixos.ifEnabled =
@@ -55,5 +56,13 @@ delib.module {
       # If bat wraps lines, it cannot be unwrapped later.
       # It is recommended to use ov for better operation.
       programs.bat.config.wrap = lib.mkIf cfg.enableBatIntegration "never";
+
+      # Since v0.36.0, jj now ignores $PAGER set in the environment
+      # programs.jujutsu.settings.ui.pager = lib.mkIf (
+      #   cfg.enableJujutsuIntegration
+      #   # Delta also sets the ui.pager option, so we need to check if Delta integration is enabled
+      #   && !(cfg.programs.delta.enable && cfg.programs.delta.enableJujutsuIntegration)
+      # ) "ov";
+      programs.jujutsu.settings.ui.pager = lib.mkIf cfg.enableJujutsuIntegration (lib.mkDefault "ov");
     };
 }
