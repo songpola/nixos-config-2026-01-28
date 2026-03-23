@@ -36,5 +36,7 @@ delib.host {
   };
 
   # The `tank/docker` dataset is mounted on `/var/lib/docker`
-  myconfig.services.docker.zfsStorageDriver.enable = true;
+  myconfig.virtualization.docker.zfsStorageDriver.enable = true;
+  myconfig.virtualization.podman.zfsStorageDriver.enable = true;
+  myconfig.virtualization.podman.zfsStorageDriver.dataset = "tank/podman";
 }

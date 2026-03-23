@@ -3,7 +3,7 @@
   ...
 }:
 delib.module {
-  name = "services.docker.zfsStorageDriver";
+  name = "virtualization.docker.zfsStorageDriver";
 
   options = delib.singleCascadeEnableOption;
 

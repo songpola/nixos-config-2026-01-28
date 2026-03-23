@@ -27,5 +27,11 @@ add:
 update:
     nix flake update
 
-rm-channels-leftover:
+cleanup-channels:
     sudo rm -r /root/.nix-defexpr/channels /nix/var/nix/profiles/per-user/root/channels
+
+sops-new PATH *ARGS:
+    sops {{ PATH }} {{ ARGS }}
+
+sops-edit PATH *ARGS:
+    sops edit {{ PATH }} {{ ARGS }}

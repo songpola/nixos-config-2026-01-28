@@ -4,7 +4,7 @@
   ...
 }:
 delib.module {
-  name = "services.docker.nvidiaSupport";
+  name = "virtualization.docker.nvidiaSupport";
 
   options = args: delib.singleEnableOption (args.parent.enable && host.nvidiaFeatured) args;
 

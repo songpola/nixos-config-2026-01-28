@@ -28,5 +28,17 @@ delib.host {
   # GTX 1050 Ti does not support open-source kernel module
   myconfig.gpu.nvidia.useOpenSourceKernelModule = false;
 
-  myconfig.services.docker.enable = true;
+  # Enable virtualization infrastructure
+  myconfig.virtualization.docker.enable = true;
+  myconfig.virtualization.podman.enable = true;
+
+  myconfig.programs.caddy-reverse-proxy.enable = true;
+  myconfig.programs.caddy-reverse-proxy.configDirectory = "/tank/v1/caddy-reverse-proxy/config";
+
+  # Use Arcane to manage Docker containers
+  myconfig.programs.arcane = {
+    enable = true;
+    address = "arcane.songpola.dev";
+    projectsDirectory = "/tank/v1/arcane/projects";
+  };
 }

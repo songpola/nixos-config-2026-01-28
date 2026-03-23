@@ -246,6 +246,21 @@
         "type": "github"
       }
     },
+    "quadlet-nix": {
+      "locked": {
+        "lastModified": 1770606362,
+        "narHash": "sha256-6pOOPOQr4rtgShBtkLkSDTql5rRqcUgTRz8O+axK2eM=",
+        "owner": "SEIAROTg",
+        "repo": "quadlet-nix",
+        "rev": "f4ae60350ea6015b6560cbd0e1f11f7e195c993d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SEIAROTg",
+        "repo": "quadlet-nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "denix": "denix",
@@ -254,7 +269,29 @@
         "nixos-facter-modules": "nixos-facter-modules",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",
+        "quadlet-nix": "quadlet-nix",
+        "sops-nix": "sops-nix",
         "unstable": "unstable"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774154798,
+        "narHash": "sha256-zsTuloDSdKf+PrI1MsWx5z/cyGEJ8P3eERtAfdP8Bmg=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "3e0d543e6ba6c0c48117a81614e90c6d8c425170",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
       }
     },
     "unstable": {
