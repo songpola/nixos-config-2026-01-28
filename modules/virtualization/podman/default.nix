@@ -21,9 +21,7 @@ delib.module {
       linger = lib.mkIf (!host.isWsl) true;
     };
 
-    environment.systemPackages = with pkgs; [
-      docker-compose # use original implementation for `podman compose` commands
-      podman-tui
-    ];
+    # Use original implementation for `podman compose` commands
+    environment.systemPackages = [ pkgs.docker-compose ];
   };
 }

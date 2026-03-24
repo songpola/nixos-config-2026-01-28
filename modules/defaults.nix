@@ -2,6 +2,7 @@
   delib,
   mySshPublicKey,
   pkgs,
+  myconfig,
   ...
 }:
 delib.module {
@@ -60,25 +61,33 @@ delib.module {
   nixos.ifEnabled = {
     environment.sessionVariables.EDITOR = "micro";
 
-    environment.systemPackages = with pkgs; [
-      just
-      just-lsp
-      lsof
-      ripgrep
-      sops
-      httpie
-      fastfetch
-      dust
-      duf
-      doggo
-      ouch
-      isd
-      nix-output-monitor
-      jq
-      # Nix
-      nil
-      nixfmt-rfc-style
-      dix
-    ];
+    environment.systemPackages =
+      with pkgs;
+      [
+        just
+        just-lsp
+        lsof
+        ripgrep
+        sops
+        httpie
+        fastfetch
+        dust
+        duf
+        doggo
+        ouch
+        isd
+        nix-output-monitor
+        jq
+        # Nix
+        nil
+        nixfmt-rfc-style
+        dix
+      ]
+      ++ lib.optionals (myconfig.virtualization.docker.enable || myconfig.virtualization.podman.enable) [
+        pkgs.unstable.dtop # not available in 25.11 yet
+      ]
+      ++ lib.optionals (myconfig.virtualization.podman.enable) [
+        podman-tui
+      ];
   };
 }
