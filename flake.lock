@@ -226,6 +226,22 @@
         "type": "github"
       }
     },
+    "pr-firewalld": {
+      "locked": {
+        "lastModified": 1774325680,
+        "narHash": "sha256-IpTr89hcGtZhpZcjaAdwKnlOYyWqhiXLXFMehesbmss=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3ddc937bee84b47489978fc275d9b642c37ea8b3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "pull/502926/head",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -269,6 +285,7 @@
         "nixos-facter-modules": "nixos-facter-modules",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",
+        "pr-firewalld": "pr-firewalld",
         "quadlet-nix": "quadlet-nix",
         "sops-nix": "sops-nix",
         "unstable": "unstable"
