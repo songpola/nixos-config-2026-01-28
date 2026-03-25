@@ -4,6 +4,15 @@ $env.config.show_banner = false
 
 $env.SHELL = ^which nu
 
+
+# The list of completers is cached to not impact shell startup time.
+# Clear the cache with `carapace --clear-cache` if your system changes.
+$env.CARAPACE_BRIDGES = [
+    zsh fish bash inshellisense
+    cobra
+    jj
+] | str join ","
+
 # If the terminal is VS Code terminal, use code as the default editor
 if ($env.TERM_PROGRAM? == "vscode") {
     $env.config.buffer_editor = ["code", "--wait"]
@@ -98,3 +107,13 @@ alias ze = zellij
 alias da = direnv allow
 
 alias skr = ssh-keygen -R
+
+# Check open ports with ss command
+#
+# OPTIONS:
+# -n, --numeric     do not try to resolve service names.
+# -l, --listening   display only listening sockets (these are omitted by default).
+# -t, --tcp         display TCP sockets.
+# -u, --udp         display UDP sockets.
+# -p, --processes   show process using socket.
+alias check-open-ports = sudo ss -tunlp
