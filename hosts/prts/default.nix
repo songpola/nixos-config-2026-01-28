@@ -32,13 +32,23 @@ delib.host {
   myconfig.virtualization.docker.enable = true;
   myconfig.virtualization.podman.enable = true;
 
-  myconfig.programs.caddy-reverse-proxy.enable = true;
-  myconfig.programs.caddy-reverse-proxy.configDirectory = "/tank/v1/caddy-reverse-proxy/config";
+  # Caddy as reverse proxy for web services
+  myconfig.containers.caddy-reverse-proxy.podman = {
+    enable = true;
+    configDirectory = "/tank/v1/caddy-reverse-proxy/config";
+  };
 
-  # Use Arcane to manage Docker containers
-  myconfig.programs.arcane = {
+  # Arcane for managing containers
+  myconfig.containers.arcane.podman = {
     enable = true;
     address = "arcane.songpola.dev";
     projectsDirectory = "/tank/v1/arcane/projects";
+    baseServerUrl = "https://home.songpola.dev";
+  };
+
+  # Dozzle for viewing container logs
+  myconfig.containers.dozzle.podman = {
+    enable = true;
+    address = "dozzle.songpola.dev";
   };
 }

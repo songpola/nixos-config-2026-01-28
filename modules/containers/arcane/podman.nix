@@ -6,7 +6,7 @@
   ...
 }:
 delib.module {
-  name = "programs.arcane";
+  name = "containers.arcane.podman";
 
   options =
     with delib;
@@ -15,6 +15,7 @@ delib.module {
 
       address = allowNull (strOption null);
       projectsDirectory = allowNull (strOption null);
+      baseServerUrl = allowNull (strOption null);
       puid = strOption "1000";
       pgid = strOption "1000";
     };
@@ -39,9 +40,7 @@ delib.module {
         containers."arcane".containerConfig =
           {
             image = "ghcr.io/getarcaneapp/arcane:latest";
-            # publishPorts = [ "3552:3552" ];
             volumes = [
-              # "/var/run/docker.sock:/var/run/docker.sock"
               "%t/podman/podman.sock:/var/run/docker.sock"
               "${volumes."arcane-data".ref}:/app/data"
             ]
@@ -55,6 +54,7 @@ delib.module {
               PGID = cfg.pgid;
               APP_URL = lib.mkIf (cfg.address != null) "https://${cfg.address}";
               PROJECTS_DIRECTORY = lib.mkIf (cfg.projectsDirectory != null) cfg.projectsDirectory;
+              BASE_SERVER_URL = lib.mkIf (cfg.baseServerUrl != null) cfg.baseServerUrl;
               #! ENCRYPTION_KEY
               #! JWT_SECRET
             };

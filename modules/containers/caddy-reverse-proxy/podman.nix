@@ -11,7 +11,7 @@ let
   ingressNetwork = "caddy-reverse-proxy-ingress";
 in
 delib.module {
-  name = "programs.caddy-reverse-proxy";
+  name = "containers.caddy-reverse-proxy.podman";
 
   options =
     with delib;
@@ -22,7 +22,7 @@ delib.module {
     };
 
   myconfig.always =
-    { myconfig, ... }:
+    { cfg, ... }:
     {
       args.shared = {
         addCaddyReverseProxyConfig =
@@ -37,23 +37,19 @@ delib.module {
               |> lib.concatStringsSep " "
               |> lib.trim
             }}}",
-            # extraLabels ? { },
           }:
           targetContainerConfig:
-          let
-            enabled = myconfig.programs.caddy-reverse-proxy.enable;
-          in
           lib.recursiveUpdate targetContainerConfig {
             networks =
-              (targetContainerConfig.networks or [ ]) ++ lib.optional (enabled) (networks.${ingressNetwork}.ref);
+              (targetContainerConfig.networks or [ ])
+              ++ lib.optional (cfg.enable) (networks.${ingressNetwork}.ref);
 
             labels =
               (targetContainerConfig.labels or { })
-              // lib.optionalAttrs (enabled) {
+              // lib.optionalAttrs (cfg.enable) {
                 "caddy" = address;
                 "caddy.reverse_proxy" = upstreams;
               };
-            # // extraLabels;
           };
       };
     };
