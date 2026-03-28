@@ -10,4 +10,6 @@ delib.host {
   nixos.environment.systemPackages = with pkgs; [
     github-copilot-cli
   ];
+
+  myconfig.programs.pixi.enable = true;
 }

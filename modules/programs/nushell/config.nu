@@ -4,7 +4,6 @@ $env.config.show_banner = false
 
 $env.SHELL = ^which nu
 
-
 # The list of completers is cached to not impact shell startup time.
 # Clear the cache with `carapace --clear-cache` if your system changes.
 $env.CARAPACE_BRIDGES = [
