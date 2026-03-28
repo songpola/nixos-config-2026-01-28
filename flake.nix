@@ -22,8 +22,6 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
-
-    pr-firewalld.url = "github:NixOS/nixpkgs/pull/502926/head";
   };
 
   outputs =
