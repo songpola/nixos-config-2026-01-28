@@ -19,7 +19,6 @@ delib.module {
       ssh.enable = true;
       ov.enable = true;
       micro.enable = true;
-      nushell.enable = true;
       atuin.enable = true;
       eza.enable = true;
       fzf.enable = true;
@@ -35,9 +34,9 @@ delib.module {
       delta.enable = true;
     };
 
-    programs.bash = {
+    programs.nushell = {
       enable = true;
-      autoExecNushell = true;
+      autoExecFromBash = true;
     };
 
     programs.git = {
