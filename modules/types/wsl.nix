@@ -11,10 +11,15 @@ delib.module {
 
   options = delib.singleEnableOption host.isWsl;
 
-  nixos.always.imports = [ inputs.nixos-wsl.nixosModules.default ];
+  nixos.always =
+    { cfg, ... }:
+    {
+      imports = [ inputs.nixos-wsl.nixosModules.default ];
+
+      wsl.enable = cfg.enable;
+    };
 
   nixos.ifEnabled = {
-    wsl.enable = true;
     wsl.defaultUser = homeManagerUser;
 
     # Enable OpenGL driver from the Windows host
