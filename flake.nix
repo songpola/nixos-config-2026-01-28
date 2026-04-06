@@ -22,6 +22,11 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+
+    # https://github.com/nix-community/nix-index/issues/287
+    # https://github.com/nix-community/nix-index-database/pull/164
+    nix-index-database.url = "github:nix-community/nix-index-database/pull/164/head";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =

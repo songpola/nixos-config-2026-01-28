@@ -12,4 +12,6 @@ delib.host {
   ];
 
   myconfig.programs.pixi.enable = true;
+
+  myconfig.programs.comma.enable = true;
 }
