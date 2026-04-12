@@ -27,28 +27,4 @@ delib.host {
 
   # GTX 1050 Ti does not support open-source kernel module
   myconfig.gpu.nvidia.useOpenSourceKernelModule = false;
-
-  # Enable virtualization infrastructure
-  myconfig.virtualization.docker.enable = true;
-  myconfig.virtualization.podman.enable = true;
-
-  # Caddy as reverse proxy for web services
-  myconfig.containers.caddy-reverse-proxy.podman = {
-    enable = true;
-    configDirectory = "/tank/v1/caddy-reverse-proxy/config";
-  };
-
-  # Arcane for managing containers
-  myconfig.containers.arcane.podman = {
-    enable = true;
-    address = "arcane.songpola.dev";
-    projectsDirectory = "/tank/v1/arcane/projects";
-    baseServerUrl = "https://home.songpola.dev";
-  };
-
-  # Dozzle for viewing container logs
-  myconfig.containers.dozzle.podman = {
-    enable = true;
-    address = "dozzle.songpola.dev";
-  };
 }

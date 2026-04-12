@@ -36,7 +36,6 @@ delib.module {
 
       virtualisation.quadlet = {
         enable = true;
-
         containers."arcane".containerConfig =
           {
             image = "ghcr.io/getarcaneapp/arcane:latest";
@@ -63,7 +62,6 @@ delib.module {
             address = cfg.address;
             port = 3552;
           };
-
         volumes."arcane-data" = { };
       };
     };

@@ -27,7 +27,7 @@ delib.module {
       args.shared = {
         addCaddyReverseProxyConfig =
           {
-            address,
+            address, # set this to null to force no-op
             protocol ? null,
             port ? null,
             upstreams ? "{{${
@@ -38,19 +38,17 @@ delib.module {
               |> lib.trim
             }}}",
           }:
-          targetContainerConfig:
-          lib.recursiveUpdate targetContainerConfig {
-            networks =
-              (targetContainerConfig.networks or [ ])
-              ++ lib.optional (cfg.enable) (networks.${ingressNetwork}.ref);
-
-            labels =
-              (targetContainerConfig.labels or { })
-              // lib.optionalAttrs (cfg.enable) {
+          if cfg.enable && address != null then
+            target: # (targetContainerConfig)
+            lib.recursiveUpdate target {
+              networks = (target.networks or [ ]) ++ [ networks.${ingressNetwork}.ref ];
+              labels = (target.labels or { }) // {
                 "caddy" = address;
                 "caddy.reverse_proxy" = upstreams;
               };
-          };
+            }
+          else
+            lib.id; # no-op if caddy is not enabled or address is null
       };
     };
 
@@ -77,7 +75,6 @@ delib.module {
 
       virtualisation.quadlet = {
         enable = true;
-
         containers."caddy-reverse-proxy".containerConfig = {
           image = "docker.io/homeall/caddy-reverse-proxy-cloudflare:latest";
           publishPorts = [
@@ -103,7 +100,6 @@ delib.module {
           # but caddy supports sd_notify
           notify = true;
         };
-
         volumes.${dataVolume} = { };
         networks.${ingressNetwork} = { };
       };

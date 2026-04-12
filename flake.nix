@@ -27,6 +27,9 @@
     # https://github.com/nix-community/nix-index-database/pull/164
     nix-index-database.url = "github:nix-community/nix-index-database/pull/164/head";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-dokploy.url = "github:el-kurto/nix-dokploy";
+    nix-dokploy.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =

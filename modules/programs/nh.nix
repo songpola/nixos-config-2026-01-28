@@ -15,7 +15,6 @@ delib.module {
     {
       programs.nh = {
         enable = true;
-        package = pkgs.unstable.nh; # target: v4.3.0
 
         # Auto clean (all) (default: weekly)
         # NOTE: No need to use the options from Home Manager,
