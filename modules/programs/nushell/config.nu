@@ -2,6 +2,8 @@ use std/util "path add"
 
 $env.config.show_banner = false
 
+path add "~/.cargo/bin"
+
 $env.SHELL = ^which nu
 
 # The list of completers is cached to not impact shell startup time.
