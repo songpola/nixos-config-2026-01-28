@@ -10,10 +10,9 @@ delib.module {
     with delib;
     moduleOptions {
       enable = boolOption false;
-
-      configDirectory = allowNull (strOption null);
-      dataDirectory = allowNull (strOption null);
-      address = allowNull (strOption null);
+      siteAddress = allowNull (strOption null);
+      configDir = allowNull (strOption null);
+      dataDir = allowNull (strOption null);
     };
 
   nixos.ifEnabled =
@@ -25,15 +24,15 @@ delib.module {
           {
             image = "ghcr.io/kozea/radicale:latest";
             volumes = [
-              "${cfg.configDirectory}:/etc/radicale:ro"
-              "${cfg.dataDirectory}:/var/lib/radicale"
+              "${cfg.configDir}:/etc/radicale:ro"
+              "${cfg.dataDir}:/var/lib/radicale"
             ];
             environments = {
               TZ = "Asia/Bangkok";
             };
           }
           |> addCaddyReverseProxyConfig {
-            address = cfg.address;
+            address = cfg.siteAddress;
             port = 5232;
           };
       };

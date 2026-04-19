@@ -11,8 +11,7 @@ delib.module {
     with delib;
     moduleOptions {
       enable = boolOption false;
-
-      address = allowNull (strOption null);
+      siteAddress = allowNull (strOption null);
     };
 
   nixos.ifEnabled =
@@ -36,7 +35,7 @@ delib.module {
             };
           }
           |> addCaddyReverseProxyConfig {
-            address = cfg.address;
+            address = cfg.siteAddress;
             port = 8080;
           };
         volumes."dozzle-data" = { };

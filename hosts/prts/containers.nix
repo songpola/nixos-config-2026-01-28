@@ -7,39 +7,47 @@ delib.host {
   myconfig.virtualization.podman.enable = true;
 
   # Caddy as reverse proxy for web services
-  myconfig.containers.caddy-reverse-proxy.podman = {
+  myconfig.services.caddy-reverse-proxy.podman = {
     enable = true;
-    configDirectory = "/tank/v1/caddy-reverse-proxy/config";
+    configDir = "/tank/v1/caddy-reverse-proxy/config";
   };
 
   # Arcane for managing containers
   myconfig.containers.arcane.podman = {
     enable = true;
-    address = "arcane.songpola.dev";
-    projectsDirectory = "/tank/v1/arcane/projects";
-    baseServerUrl = "https://home.songpola.dev";
+    siteAddress = "arcane.songpola.dev";
+    projectsDir = "/tank/v1/arcane/projects";
+    baseServerUrl = "https://songpola.dev";
   };
 
   # Dozzle for viewing container logs
   myconfig.containers.dozzle.podman = {
     enable = true;
-    address = "dozzle.songpola.dev";
+    siteAddress = "dozzle.songpola.dev";
   };
 
+  # ProtonMail Bridge for email integration with Thunderbird
   myconfig.containers.protonmail-bridge.podman = {
     enable = true;
-    dataDirectory = "/tank/v1/protonmail-bridge/root";
+    dataDir = "/tank/v1/protonmail-bridge/root";
     smtpPort = 1025;
     imapPort = 1143;
   };
 
   # Radicale for calendar and contact management
   myconfig.containers.radicale.podman = {
-    enable = true;
-    address = "radicale.songpola.dev";
-    configDirectory = "/tank/v1/radicale/config";
-    dataDirectory = "/tank/v1/radicale/data";
+    # enable = true;
+    siteAddress = "radicale.songpola.dev";
+    configDir = "/tank/v1/radicale/config";
+    dataDir = "/tank/v1/radicale/data";
   };
 
-  myconfig.services.dokploy.enable = true;
+  # qui for managing qBittorrent instances
+  myconfig.services.qui.podman = {
+    enable = true;
+    siteAddress = "qui.songpola.dev";
+    configDir = "/tank/v1/podman/rootful/containers/qui/config";
+  };
+
+  myconfig.services.dokploy.enable = false;
 }

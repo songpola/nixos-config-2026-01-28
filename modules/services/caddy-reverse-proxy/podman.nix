@@ -11,20 +11,21 @@ let
   ingressNetwork = "caddy-reverse-proxy-ingress";
 in
 delib.module {
-  name = "containers.caddy-reverse-proxy.podman";
+  name = "services.caddy-reverse-proxy.podman";
 
   options =
     with delib;
     moduleOptions {
       enable = boolOption false;
-
-      configDirectory = noDefault (pathOption null);
+      configDir = noDefault (pathOption null);
+      ingressNetworkRef = readOnly (strOption (networks.${ingressNetwork}.ref));
     };
 
   myconfig.always =
     { cfg, ... }:
     {
       args.shared = {
+        caddyReverseProxyIngressNetworkRef = cfg.ingressNetworkRef;
         addCaddyReverseProxyConfig =
           {
             address, # set this to null to force no-op
@@ -41,7 +42,7 @@ delib.module {
           if cfg.enable && address != null then
             target: # (targetContainerConfig)
             lib.recursiveUpdate target {
-              networks = (target.networks or [ ]) ++ [ networks.${ingressNetwork}.ref ];
+              networks = (target.networks or [ ]) ++ [ cfg.ingressNetworkRef ];
               labels = (target.labels or { }) // {
                 "caddy" = address;
                 "caddy.reverse_proxy" = upstreams;
@@ -75,6 +76,8 @@ delib.module {
 
       virtualisation.quadlet = {
         enable = true;
+        networks.${ingressNetwork} = { };
+        volumes.${dataVolume} = { };
         containers."caddy-reverse-proxy".containerConfig = {
           image = "docker.io/homeall/caddy-reverse-proxy-cloudflare:latest";
           publishPorts = [
@@ -82,26 +85,24 @@ delib.module {
             "443:443" # HTTPS
             "443:443/udp" # HTTP3
           ];
-          volumes = [
-            "%t/podman/podman.sock:/var/run/docker.sock"
-            "${cfg.configDirectory}:/config"
-            "${volumes.${dataVolume}.ref}:/data"
-            "${caddyfile}:/config/Caddyfile"
-            "${secretPath}:${secretPath}"
-          ];
+          networks = [ cfg.ingressNetworkRef ];
           environments = {
             CADDY_INGRESS_NETWORKS = ingressNetwork;
             CADDY_DOCKER_NO_SCOPE = "true"; # for podman compatibility
             # Ref: https://github.com/lucaslorentz/caddy-docker-proxy/blob/master/tests/caddyfile%2Bconfig/compose.yaml
             CADDY_DOCKER_CADDYFILE_PATH = "/config/Caddyfile";
           };
-          networks = [ networks.${ingressNetwork}.ref ];
+          volumes = [
+            "%t/podman/podman.sock:/var/run/docker.sock"
+            "${cfg.configDir}:/config"
+            "${volumes.${dataVolume}.ref}:/data"
+            "${caddyfile}:/config/Caddyfile"
+            "${secretPath}:${secretPath}"
+          ];
           # The image don't have HEALTHCHECK
           # but caddy supports sd_notify
           notify = true;
         };
-        volumes.${dataVolume} = { };
-        networks.${ingressNetwork} = { };
       };
     };
 }

@@ -12,12 +12,9 @@ delib.module {
     with delib;
     moduleOptions {
       enable = boolOption false;
-
-      address = allowNull (strOption null);
-      projectsDirectory = allowNull (strOption null);
+      siteAddress = allowNull (strOption null);
+      projectsDir = allowNull (strOption null);
       baseServerUrl = allowNull (strOption null);
-      puid = strOption "1000";
-      pgid = strOption "1000";
     };
 
   nixos.ifEnabled =
@@ -43,23 +40,23 @@ delib.module {
               "%t/podman/podman.sock:/var/run/docker.sock"
               "${volumes."arcane-data".ref}:/app/data"
             ]
-            ++ lib.optional (cfg.projectsDirectory != null) "${cfg.projectsDirectory}:${cfg.projectsDirectory}";
+            ++ lib.optional (cfg.projectsDir != null) "${cfg.projectsDir}:${cfg.projectsDir}";
             environmentFiles = [
               secrets.${secret}.path
             ];
             environments = {
               TZ = "Asia/Bangkok";
-              PUID = cfg.puid;
-              PGID = cfg.pgid;
-              APP_URL = lib.mkIf (cfg.address != null) "https://${cfg.address}";
-              PROJECTS_DIRECTORY = lib.mkIf (cfg.projectsDirectory != null) cfg.projectsDirectory;
+              PUID = "1000";
+              PGID = "1000";
+              APP_URL = lib.mkIf (cfg.siteAddress != null) "https://${cfg.siteAddress}";
+              PROJECTS_DIRECTORY = lib.mkIf (cfg.projectsDir != null) cfg.projectsDir;
               BASE_SERVER_URL = lib.mkIf (cfg.baseServerUrl != null) cfg.baseServerUrl;
               #! ENCRYPTION_KEY
               #! JWT_SECRET
             };
           }
           |> addCaddyReverseProxyConfig {
-            address = cfg.address;
+            address = cfg.siteAddress;
             port = 3552;
           };
         volumes."arcane-data" = { };

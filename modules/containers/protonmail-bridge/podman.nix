@@ -10,8 +10,7 @@ delib.module {
     with delib;
     moduleOptions {
       enable = boolOption false;
-
-      dataDirectory = allowNull (strOption null);
+      dataDir = allowNull (strOption null);
       smtpPort = allowNull (portOption null);
       imapPort = allowNull (portOption null);
     };
@@ -25,7 +24,7 @@ delib.module {
           # https://github.com/shenxn/protonmail-bridge-docker/issues/135
           image = "docker.io/dancwilliams/protonmail-bridge:latest";
           volumes = [
-            "${cfg.dataDirectory}:/root"
+            "${cfg.dataDir}:/root"
           ];
           environments = {
             TZ = "Asia/Bangkok";
