@@ -1,5 +1,6 @@
 {
   delib,
+  pkgs,
   ...
 }:
 delib.host {
@@ -11,11 +12,12 @@ delib.host {
     boot.supportedFilesystems = [ "zfs" ];
 
     boot.zfs = {
+      # TODO 2026-05-09: Wait until next stable release or until `pkgs.zfs = pkgs.zfs_2_4`
+      package = pkgs.zfs_2_4; # ensure to be v2.4.1+
+
       extraPools = [ "tank" ];
 
-      # The `tank` pool was created using "/dev/disk/by-partlabel"
-      # TODO: Consider using "/dev/disk/by-id" instead for better stability.
-      devNodes = "/dev/disk/by-partlabel";
+      devNodes = "/dev/disk/by-id";
 
       # Forcibly import the ZFS root pool(s) during early boot.
       #
