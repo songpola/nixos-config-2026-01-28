@@ -4,7 +4,7 @@
   ...
 }:
 delib.module {
-  name = "virtualization.docker.enableNvidia";
+  name = "virtualization.podman.enableNvidia";
 
   options = args: delib.singleEnableOption (args.parent.enable && host.nvidiaFeatured) args;
 

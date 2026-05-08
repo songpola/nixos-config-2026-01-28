@@ -8,12 +8,17 @@ delib.module {
 
   options =
     with delib;
-    moduleOptions {
-      enable = boolOption host.nvidiaFeatured;
+    moduleOptions (
+      { myconfig, ... }:
+      {
+        enable = boolOption host.nvidiaFeatured;
 
-      # The users need to set this option depending on their GPU model
-      useOpenSourceKernelModule = noDefault (boolOption null);
-    };
+        # The users need to set this option depending on their GPU model
+        useOpenSourceKernelModule = noDefault (boolOption null);
+
+        enableContainerToolkit = boolOption false;
+      }
+    );
 
   nixos.ifEnabled =
     { cfg, ... }:
@@ -22,5 +27,7 @@ delib.module {
       services.xserver.videoDrivers = [ "nvidia" ];
 
       hardware.nvidia.open = cfg.useOpenSourceKernelModule;
+
+      hardware.nvidia-container-toolkit.enable = cfg.enableContainerToolkit;
     };
 }
