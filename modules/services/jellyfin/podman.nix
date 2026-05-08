@@ -4,7 +4,7 @@
   ...
 }:
 delib.module {
-  name = "containers.jellyfin.podman";
+  name = "services.jellyfin.podman";
 
   options =
     with delib;
@@ -23,14 +23,13 @@ delib.module {
           # Internal to containers, rarely change.
           # This will be the same across all Starrs containers,
           # to enable the "Atomic Move" technique (hardlinking instead of copying files).
-          containerBaseDataDir = "/mnt/starrs-data";
-          containerMediaDataDir = "${containerBaseDataDir}/media";
+          containerMediaDataDir = "/mnt/starrs-data/media";
         in
         {
           enable = true;
           containers."jellyfin".containerConfig =
             {
-              image = "lscr.io/linuxserver/jellyfin:version-10.11.2ubu2404";
+              image = "lscr.io/linuxserver/jellyfin:version-10.11.8ubu2404";
               environments = {
                 TZ = "Asia/Bangkok";
                 PUID = "1000";

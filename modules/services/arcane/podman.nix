@@ -6,7 +6,7 @@
   ...
 }:
 delib.module {
-  name = "containers.arcane.podman";
+  name = "services.arcane.podman";
 
   options =
     with delib;

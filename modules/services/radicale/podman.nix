@@ -1,43 +1,39 @@
 {
   delib,
-  config,
   addCaddyReverseProxyConfig,
   ...
 }:
 delib.module {
-  name = "containers.dozzle.podman";
+  name = "services.radicale.podman";
 
   options =
     with delib;
     moduleOptions {
       enable = boolOption false;
       siteAddress = allowNull (strOption null);
+      configDir = allowNull (strOption null);
+      dataDir = allowNull (strOption null);
     };
 
   nixos.ifEnabled =
     { cfg, ... }:
-    let
-      inherit (config.virtualisation.quadlet) volumes;
-    in
     {
       virtualisation.quadlet = {
-        containers."dozzle".containerConfig =
+        containers."radicale".containerConfig =
           {
-            image = "docker.io/amir20/dozzle:latest";
+            image = "ghcr.io/kozea/radicale:latest";
             volumes = [
-              "%t/podman/podman.sock:/var/run/docker.sock"
-              "${volumes."dozzle-data".ref}:/data"
+              "${cfg.configDir}:/etc/radicale:ro"
+              "${cfg.dataDir}:/var/lib/radicale"
             ];
             environments = {
               TZ = "Asia/Bangkok";
-              DOZZLE_ENABLE_ACTIONS = "true";
             };
           }
           |> addCaddyReverseProxyConfig {
             address = cfg.siteAddress;
-            port = 8080;
+            port = 5232;
           };
-        volumes."dozzle-data" = { };
       };
     };
 }

@@ -4,7 +4,7 @@
   ...
 }:
 delib.module {
-  name = "containers.protonmail-bridge.podman";
+  name = "services.protonmail-bridge.podman";
 
   options =
     with delib;
