@@ -19,7 +19,6 @@ delib.module {
     { cfg, ... }:
     {
       virtualisation.quadlet = {
-        enable = true;
         containers."protonmail-bridge".containerConfig = {
           # https://github.com/shenxn/protonmail-bridge-docker/issues/135
           image = "docker.io/dancwilliams/protonmail-bridge:latest";

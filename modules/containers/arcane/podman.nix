@@ -32,7 +32,6 @@ delib.module {
       };
 
       virtualisation.quadlet = {
-        enable = true;
         containers."arcane".containerConfig =
           {
             image = "ghcr.io/getarcaneapp/arcane:latest";

@@ -21,7 +21,6 @@ delib.module {
     in
     {
       virtualisation.quadlet = {
-        enable = true;
         containers."dozzle".containerConfig =
           {
             image = "docker.io/amir20/dozzle:latest";

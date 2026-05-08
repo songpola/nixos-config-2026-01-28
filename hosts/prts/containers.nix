@@ -3,8 +3,8 @@ delib.host {
   name = "prts";
 
   # Enable virtualization infrastructure
-  myconfig.virtualization.docker.enable = true;
-  myconfig.virtualization.podman.enable = true;
+  myconfig.virtualization.docker.enable = false;
+  myconfig.virtualization.podman.enable = false;
 
   # Caddy as reverse proxy for web services
   myconfig.services.caddy-reverse-proxy.podman = {

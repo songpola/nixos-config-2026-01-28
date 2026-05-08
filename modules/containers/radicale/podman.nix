@@ -19,7 +19,6 @@ delib.module {
     { cfg, ... }:
     {
       virtualisation.quadlet = {
-        enable = true;
         containers."radicale".containerConfig =
           {
             image = "ghcr.io/kozea/radicale:latest";
