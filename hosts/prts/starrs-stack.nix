@@ -9,16 +9,16 @@ delib.host {
   myconfig.stacks.starrs.podman = {
     enable = true;
     baseSiteAddress = "songpola.dev";
-    baseConfigDir = "/tank/v1/podman/rootful/stacks/starrs";
-    baseDataDir = "/tank/v1/starrs-data";
+    baseConfigDir = "/tank/v2/starrs-stack";
+    baseDataDir = "/tank/v2/starrs-data";
     torrentingPort = 6882;
   };
 
   # Jellyfin for media streaming
-  myconfig.containers.jellyfin.podman = {
+  myconfig.services.jellyfin.podman = {
     enable = true;
     siteAddress = "jf.songpola.dev";
-    configDir = "/tank/v1/podman/rootful/containers/jellyfin/config";
-    mediaDataDir = "/tank/v1/starrs-data/media";
+    configDir = "/tank/v2/services/jellyfin/config";
+    mediaDataDir = "/tank/v2/starrs-data/media";
   };
 }

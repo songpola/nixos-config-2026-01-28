@@ -19,11 +19,11 @@ delib.module {
       torrentingPort = allowNull (portOption null) |> lib.flip apply toString;
 
       qbittorrentImage = strOption "lscr.io/linuxserver/qbittorrent:version-5.1.4-r3";
-      # recyclarrImage = strOption "ghcr.io/recyclarr/recyclarr:latest";
       clonarrImage = strOption "ghcr.io/prophetse7en/clonarr:latest";
       prowlarrImage = strOption "lscr.io/linuxserver/prowlarr:version-2.3.5.5327";
       byparrImage = strOption "ghcr.io/thephaseless/byparr:latest";
       radarrImage = strOption "lscr.io/linuxserver/radarr:version-6.1.1.10360";
+      sonarrImage = strOption "lscr.io/linuxserver/sonarr:version-4.0.17.2952";
     };
 
   nixos.ifEnabled =
@@ -35,19 +35,19 @@ delib.module {
       podRef = pods.${podName}.ref;
 
       qbittorrentName = "${podName}-qbittorrent";
-      # recyclarrName = "${podName}-recyclarr";
       clonarrName = "${podName}-clonarr";
       byparrName = "${podName}-byparr";
       prowlarrName = "${podName}-prowlarr";
       radarrName = "${podName}-radarr";
       radarrAnimeName = "${radarrName}-anime";
+      sonarrName = "${podName}-sonarr";
+      sonarrAnimeName = "${sonarrName}-anime";
 
       # Internal to containers, rarely change.
       # This will be the same across all Starrs containers,
       # to enable the "Atomic Move" technique (hardlinking instead of copying files).
       containerBaseDataDir = "/mnt/starrs-data";
       containerTorrentsDataDir = "${containerBaseDataDir}/torrents";
-      # containerMediaDataDir = "${containerBaseDataDir}/media";
 
       dataVolumeMount = "${cfg.baseDataDir}:${containerBaseDataDir}";
       torrentsDataVolumeMount = "${cfg.baseDataDir}/torrents:${containerTorrentsDataDir}";
@@ -63,8 +63,6 @@ delib.module {
       myconfig.services.qui.podman.extraVolumes = [ torrentsDataVolumeMount ];
 
       virtualisation.quadlet = {
-        enable = true;
-
         pods.${podName}.podConfig = {
           publishPorts =
             {
@@ -76,7 +74,7 @@ delib.module {
             |> lib.mapAttrsToList (containerPort: hostPort: "${hostPort}:${containerPort}");
           networks = [
             caddyReverseProxyIngressNetworkRef
-            "${quiNetworkRef}:alias=${qbittorrentName}" # for starrs-qbittorrent <-> qui integration
+            "${quiNetworkRef}:alias=${podName}" # for qui integration
           ];
           labels =
             let
@@ -109,6 +107,8 @@ delib.module {
               ${prowlarrName} = 9696;
               ${radarrName} = 7878;
               ${radarrAnimeName} = 7879;
+              ${sonarrName} = 8989;
+              ${sonarrAnimeName} = 8990;
             };
           # starrs-prowlarr: a little hack for bypassing Cloudflare
           addHosts = [
@@ -130,21 +130,10 @@ delib.module {
             "${cfg.baseConfigDir}/${qbittorrentName}/config:/config"
             torrentsDataVolumeMount
           ];
-          # memory = "2G"; # explicitly limit to 2GB of RAM
+          memory = "2G"; # explicitly limit to 2GB of RAM
         };
 
         # Guide Sync (configuration management)
-        # containers.${recyclarrName}.containerConfig = {
-        #   pod = podRef;
-        #   image = cfg.recyclarrImage;
-        #   user = "1000:1000";
-        #   environments = {
-        #     TZ = "Asia/Bangkok";
-        #   };
-        #   volumes = [
-        #     "${cfg.baseConfigDir}/${recyclarrName}/config:/config"
-        #   ];
-        # };
         containers.${clonarrName}.containerConfig = {
           pod = podRef;
           image = cfg.clonarrImage;
@@ -196,7 +185,31 @@ delib.module {
           ];
         };
 
-        # TODO: sonarr, byparr
+        # TV Series (Main)
+        containers.${sonarrName}.containerConfig = {
+          pod = podRef;
+          image = cfg.sonarrImage;
+          environments = commmonEnvs // {
+            SONARR__SERVER__PORT = "8989"; # Sonarr default
+          };
+          volumes = [
+            "${cfg.baseConfigDir}/${sonarrName}/config:/config"
+            dataVolumeMount
+          ];
+        };
+
+        # TV Series (Anime)
+        containers.${sonarrAnimeName}.containerConfig = {
+          pod = podRef;
+          image = cfg.sonarrImage;
+          environments = commmonEnvs // {
+            SONARR__SERVER__PORT = "8990"; # Sonarr default + 1
+          };
+          volumes = [
+            "${cfg.baseConfigDir}/${sonarrAnimeName}/config:/config"
+            dataVolumeMount
+          ];
+        };
       };
     };
 }

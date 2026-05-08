@@ -13,7 +13,7 @@ switch *ARGS:
     nh os switch . {{ ARGS }}
 
 remote OP HOSTNAME TARGET *ARGS:
-    nh os {{ OP }} . --hostname={{ HOSTNAME }} --target-host={{ TARGET }} --elevation-strategy=passwordless {{ ARGS }}
+    nh os {{ OP }} . --hostname={{ HOSTNAME }} --target-host={{ TARGET }} --elevation-strategy=passwordless --build-host={{ TARGET }} --show-activation-logs {{ ARGS }}
 
 boot *ARGS:
     nh os boot . {{ ARGS }}
