@@ -26,6 +26,14 @@ delib.host {
     baseServerUrl = "https://songpola.dev";
   };
 
+  # Dockge for managing container stacks
+  myconfig.services.dockge.podman = {
+    enable = true;
+    siteAddress = "dockge.songpola.dev";
+    dataDir = "/tank/v2/services/dockge/data";
+    stacksDir = "/tank/v2/services/dockge/stacks";
+  };
+
   # qui for managing qBittorrent instances
   myconfig.services.qui.podman = {
     enable = true;
