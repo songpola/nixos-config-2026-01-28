@@ -58,6 +58,8 @@ delib.module {
   };
 
   nixos.ifEnabled = {
+    environment.localBinInPath = true; # for uv
+
     environment.sessionVariables.EDITOR = "micro";
 
     environment.systemPackages =
